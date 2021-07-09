@@ -5,12 +5,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        System.out.println("Welcome to Blackjack!");
 
-        Deck playingDeck = new Deck();
-        playingDeck.createFullDeck();
-        playingDeck.shuffle();
+        Deck playingDeck = generateDeck();
 
     // Create a deck for the player
         Deck playerDeck = new Deck();
@@ -94,6 +90,7 @@ public class Main {
                     dealerDeck.draw(playingDeck);
                     System.out.println("Dealer draws: " + dealerDeck.getCard(dealerDeck.getDeckSize() -1).toString());
                 }
+
                 //Display Total Value for Dealer
                 System.out.println("Dealer hand is valued at: " + dealerDeck.cardsValue());
                 // Determine if dealer busted
@@ -113,19 +110,34 @@ public class Main {
                 if(playerDeck.cardsValue() > dealerDeck.cardsValue() && endRound == false){
                     System.out.println("You win the hand!");
                     playerMoney += playerBet;
-                    endRound = true;
                 } else if(!endRound){
                     System.out.println("You lost the hand.");
                     playerMoney -= playerBet;
-                    endRound = true;
                 }
 
-                playerDeck.resetDeck(playingDeck);
-                dealerDeck.resetDeck(playingDeck);
+                reset(playerDeck, dealerDeck, playingDeck);
+
                 System.out.println("End of hand.");
             }
 
         System.out.println("Game over!, You are out of money");
+
         }
+
+        public static Deck generateDeck(){
+            System.out.println("Welcome to Blackjack!");
+
+            Deck playingDeck = new Deck();
+            playingDeck.createFullDeck();
+            playingDeck.shuffle();
+            return playingDeck;
+        }
+
+        public static void reset(Deck playerDeck, Deck dealerDeck, Deck playingDeck){
+            playerDeck.resetDeck(playingDeck);
+            dealerDeck.resetDeck(playingDeck);
+        }
+
+
 
 }
